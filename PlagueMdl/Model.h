@@ -39,6 +39,9 @@ public:
 	inline void setPeople(SimplePeople p, int ind) {
 		ppls[ind] = p;
 	}
+	inline void setDoctor(Doctor d, int ind) {
+		docs[ind] = d;
+	}
 	
 	// возврат размера карты
 	inline float getXSize() const {
@@ -48,6 +51,7 @@ public:
 		return ySize;
 	}
 
+	int getHowManySick() const;
 
 	// возврат количества человек
 	inline int getPplCount() const {
