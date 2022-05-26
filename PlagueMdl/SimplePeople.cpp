@@ -46,12 +46,12 @@ void SimplePeople::positionUpdate() {
     xCoord += xSpeed;
     yCoord += ySpeed;
 }
-void SimplePeople::sickStatusUpdate(bool sick) {
+void SimplePeople::sickStatusUpdate(bool sick, int per) {
     sickStatus = sick;
-    incubationPeriod = 2;
+    incubationPeriod = per;
 }
-void SimplePeople::infect(SimplePeople &ppl) {
-    ppl.sickStatusUpdate(sickStatus);
+void SimplePeople::infect() {
+
 }
 
 

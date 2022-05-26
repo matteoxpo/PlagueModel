@@ -20,6 +20,7 @@ void Doctor::positionUpdate() {
 
 void Doctor::treat(SimplePeople& ppl) {
     ppl.sickStatusUpdate(false);
+    ppl.setIncubationPeriod(0);
 }
 
 std::ostream& operator <<(std::ostream& out, Doctor& d) {

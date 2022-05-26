@@ -238,8 +238,6 @@ void inputDoctor(Doctor& d) {
 
 void Menu() {
 
-
-
 	std::cout << "Creating model." << std::endl;
 	float xSize = -1, ySize = -1;
 	int pplsCount = -1, docsCount = -1;
@@ -597,6 +595,7 @@ void Menu() {
 				M.updateAgentStatus(dt);
 				break;
 		case 10:
+			std::cout << std::endl << "Thx for using, bye";
 			return;
 			break;
 
@@ -608,6 +607,6 @@ void Menu() {
 
 int main()
 {
-	Menu();
-
+	//Menu();
+	
 }

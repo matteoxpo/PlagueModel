@@ -112,7 +112,7 @@ void Model::destroy() {
 
 int Model::getHowManySick() const {
 	int countSick = 0;
-	for (int i = 0; i < peoplesCount - 1; i++) {
+	for (int i = 0; i < peoplesCount; i++) {
 		if (true == ppls[i].getSickStatus())
 			countSick++;
 	}
@@ -216,55 +216,87 @@ void Model::updateAgentStatus(int dt) {
 	int treated = 0;
 	for (int i = 0; i < dt; i++) {
 		// проверка на выход за рамки поля, изменение направления в противном случае
-		if (ppls[i].getX() > xSize) {
-			ppls[i].setX(xSize);
-			ppls[i].setSpeedX(-ppls[i].getSpeedX());
-		}
-		if (ppls[i].getX() < -xSize) {
-			ppls[i].setX(-xSize);
-			ppls[i].setSpeedX(-ppls[i].getSpeedX());
-		}
-		if (ppls[i].getY() > ySize) {
-			ppls[i].setY(ySize);
-			ppls[i].setSpeedY(-ppls[i].getSpeedY());
-		}
-		if (ppls[i].getY() < -ySize) {
-			ppls[i].setY(-ySize);
-			ppls[i].setSpeedY(-ppls[i].getSpeedY());
+		if (nullptr != ppls) {
+			if (ppls[i].getX() > xSize) {
+				ppls[i].setX(xSize);
+				ppls[i].setSpeedX(-ppls[i].getSpeedX());
+			}
+			if (ppls[i].getX() < -xSize) {
+				ppls[i].setX(-xSize);
+				ppls[i].setSpeedX(-ppls[i].getSpeedX());
+			}
+			if (ppls[i].getY() > ySize) {
+				ppls[i].setY(ySize);
+				ppls[i].setSpeedY(-ppls[i].getSpeedY());
+			}
+			if (ppls[i].getY() < -ySize) {
+				ppls[i].setY(-ySize);
+				ppls[i].setSpeedY(-ppls[i].getSpeedY());
+			}
 		}
 
+		if (nullptr != docs) {
+			if (docs[i].getX() > xSize) {
+				docs[i].setX(xSize);
+				docs[i].setSpeedX(-docs[i].getSpeedX());
+			}
+			if (docs[i].getX() < -xSize) {
+				docs[i].setX(-xSize);
+				docs[i].setSpeedX(-docs[i].getSpeedX());
+			}
+			if (docs[i].getY() > ySize) {
+				docs[i].setY(ySize);
+				docs[i].setSpeedY(-docs[i].getSpeedY());
+			}
+			if (docs[i].getY() < -ySize) {
+				docs[i].setY(-ySize);
+				docs[i].setSpeedY(-docs[i].getSpeedY());
+			}
+		}
+
+
+
+
 		// меняем инукубационный период людей
-		for (int j = 0; j < peoplesCount; j++) {
-			if (ppls[j].getIncubationPerion() != 0) {
-				ppls[j].setIncubationPeriod( ppls[j].getIncubationPerion() - 1 );
-				if (ppls[j].getIncubationPerion() == 0) {
-					ppls[j].setInfective(true);
+		if (nullptr != ppls) {
+			for (int j = 0; j < peoplesCount; j++) {
+				if (ppls[j].getIncubationPerion() != 0) {
+					ppls[j].setIncubationPeriod(ppls[j].getIncubationPerion() - 1);
+					if (ppls[j].getIncubationPerion() == 0) {
+						ppls[j].setInfective(true);
+					}
 				}
 			}
 		}
 
 		// проверка заражённых рядом, заражение(установка инкубационного периода)
-		for (int j = 0; j < peoplesCount; j++) {
-			if (distancePplPpl(ppls[i], ppls[j]) < 2) {
-				if (true == ppls[j].getSickStatus() && ppls[j].getIncubationPerion() == 0) {
-					if (false == ppls[i].getSickStatus()) {
-						ppls[i].sickStatusUpdate(true);
-						ppls[i].setIncubationPeriod(2);
+		if (nullptr != ppls) {
+			for (int j = 0; j < peoplesCount; j++) {
+				if (distancePplPpl(ppls[i], ppls[j]) < 2) {
+					if (true == ppls[j].getSickStatus() && ppls[j].getIncubationPerion() == 0) {
+						if (false == ppls[i].getSickStatus()) {
+							ppls[i].sickStatusUpdate(true, 2);
+						}
 					}
 				}
 			}
 		}
 
 		// доктора лечат всех рядом стоящих людей на момент dt
-		for (int j = 0; j < doctorsCount; j++) {
-			if (distancePplDoc(ppls[i], docs[j]) < 2) {
-				ppls[i].sickStatusUpdate(0);
-				ppls[i].setIncubationPeriod(0);
-				ppls[i].setInfective(false);
-				treated++;
+		if (nullptr != docs) {
+			for (int j = 0; j < doctorsCount; j++) {
+				if (distancePplDoc(ppls[i], docs[j]) < 2) {
+					ppls[i].sickStatusUpdate(0, 0);
+					ppls[i].setIncubationPeriod(0);
+					ppls[i].setInfective(false);
+					treated++;
+				}
 			}
 		}
+
+		if (nullptr != ppls)
 		ppls[i].positionUpdate();
+		if (nullptr != docs)
 		docs[i].positionUpdate();
 	}
 

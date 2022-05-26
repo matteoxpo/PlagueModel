@@ -56,9 +56,9 @@ public:
         infective = inf;
     }
     void positionUpdate();
-    void sickStatusUpdate(bool);
+    void sickStatusUpdate(bool,int);
 
-    void infect(SimplePeople &);
+    void infect();
 
     friend std::ostream& operator <<(std::ostream&, SimplePeople&);
     // std:: cout << p;
