@@ -108,28 +108,30 @@ void inputPeople(SimplePeople &p) {
 	safetyFlag = true;
 
 	//incubationPeriod
-	while (true == safetyFlag) {
-		if (false == p.getSickStatus()) safetyFlag = false;
-		std::cout << "Enter incubation period: ";
-		input.clear();
-		std::cin >> input;
-		try {
-			incPer = stoi(input);
-			if (incPer < 0) throw std::logic_error("Negative incubation period");
-			safetyFlag = false;
-		}
-		catch (std::invalid_argument& err) {
-			std::cerr << "Caught: " << err.what() << std::endl;
-			std::cerr << "Type: " << typeid(err).name() << std::endl;
-			std::cout << std::endl;
-		}
-		catch (std::logic_error& err) {
-			std::cerr << "Caught: " << err.what() << std::endl;
-			std::cerr << "Type: " << typeid(err).name() << std::endl;
-			std::cout << std::endl;
+	if (true == sickStat) {
+		while (true == safetyFlag) {
+			if (false == p.getSickStatus()) safetyFlag = false;
+			std::cout << "Enter incubation period: ";
+			input.clear();
+			std::cin >> input;
+			try {
+				incPer = stoi(input);
+				if (incPer < 0) throw std::logic_error("Negative incubation period");
+				safetyFlag = false;
+			}
+			catch (std::invalid_argument& err) {
+				std::cerr << "Caught: " << err.what() << std::endl;
+				std::cerr << "Type: " << typeid(err).name() << std::endl;
+				std::cout << std::endl;
+			}
+			catch (std::logic_error& err) {
+				std::cerr << "Caught: " << err.what() << std::endl;
+				std::cerr << "Type: " << typeid(err).name() << std::endl;
+				std::cout << std::endl;
+			}
 		}
 	}
-	
+	else incPer = 0;
 	if (0 == incPer && true == sickStat) {
 		inf = true;
 	}
