@@ -2,7 +2,7 @@
 #include <iostream>
 Doctor::Doctor() :
     xCoord{ 0 },
-    yCoord{ 0 },
+    /*asdasdvbjhvbu*/yCoord{ 0 },
     xSpeed{ 0 },
     ySpeed{ 0 }
 {}
@@ -18,16 +18,11 @@ void Doctor::positionUpdate() {
     yCoord += ySpeed;
 }
 
-void Doctor::treat(SimplePeople &ppl) {
+void Doctor::treat(SimplePeople& ppl) {
     ppl.sickStatusUpdate(false);
 }
 
-std::ostream& operator <<(std::ostream& out, Doctor& d){clude "Doctor.h"
-#include <iostream>
-Doctor::Doctor() :
-    xCoord{ 0 },
-    /*asdasdvbjhvbu*/yCoord{0},
-
+std::ostream& operator <<(std::ostream& out, Doctor& d) {
     out << "X coord: " << d.getX() << std::endl;
     out << "Y coord: " << d.getY() << std::endl;
     out << "X speed: " << d.getSpeedX() << std::endl;
@@ -35,3 +30,4 @@ Doctor::Doctor() :
     out << std::endl;
     return out;
 }
+
