@@ -149,6 +149,7 @@ void Model::pushDoctor(Doctor d) {
 		tDocs[i] = docs[i];
 	}
 	delete[] docs;
+	//this comment doesn't exist
 	docs = tDocs;
 	docs[doctorsCount - 1] = d;
 
@@ -186,7 +187,7 @@ void Model::delDocByInd(int ind) {
 	docs = tDocs;
 }
 
-// методы подсчета расстония от человека к человеку/докутору
+// методы подсчета расстония от человека к человеку/доктору
 float Model::distancePplDoc(SimplePeople ppl, Doctor doc) const {
 	float xppl = ppl.getX();
 	float yppl = ppl.getY();
@@ -242,7 +243,7 @@ void Model::updateAgentStatus(int dt) {
 			}
 		}
 
-		// проверка заразных рядом, заражение(установка инкубационного периода)
+		// проверка заражённых рядом, заражение(установка инкубационного периода)
 		for (int j = 0; j < peoplesCount; j++) {
 			if (distancePplPpl(ppls[i], ppls[j]) < 2) {
 				if (true == ppls[j].getSickStatus()) {
@@ -284,6 +285,7 @@ std::ostream& operator <<(std::ostream& out, Model& m) {
 		}
 	}
 	if (0 == m.doctorsCount)
+		//tets code
 		out << "No doctors" << std::endl;
 	else {
 		for (int i = 0; i < m.doctorsCount; i++) {

@@ -22,7 +22,12 @@ void Doctor::treat(SimplePeople &ppl) {
     ppl.sickStatusUpdate(false);
 }
 
-std::ostream& operator <<(std::ostream& out, Doctor& d){
+std::ostream& operator <<(std::ostream& out, Doctor& d){clude "Doctor.h"
+#include <iostream>
+Doctor::Doctor() :
+    xCoord{ 0 },
+    /*asdasdvbjhvbu*/yCoord{0},
+
     out << "X coord: " << d.getX() << std::endl;
     out << "Y coord: " << d.getY() << std::endl;
     out << "X speed: " << d.getSpeedX() << std::endl;

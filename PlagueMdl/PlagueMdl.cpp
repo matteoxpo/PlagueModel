@@ -141,6 +141,7 @@ void inputPeople(SimplePeople &p) {
 	p.sickStatusUpdate(sickStat);
 	p.setInfective(sickStat);
 	p.setIncubationPeriod(incPer);
+
 }
 
 
@@ -411,6 +412,7 @@ void Menu() {
 				std::cout << std::endl;
 			}
 		}
+
 		safetyFlag = true;
 
 		switch (command) {
@@ -583,4 +585,8 @@ int main()
 {
 	Menu();
 
+=======
+	SimplePeople p;
+	inputPeople(p);
+	std::cout << p;
 }
