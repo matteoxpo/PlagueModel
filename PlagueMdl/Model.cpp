@@ -236,7 +236,7 @@ void Model::updateAgentStatus(int dt) {
 		// меняем инукубационный период людей
 		for (int j = 0; j < peoplesCount; j++) {
 			if (ppls[j].getIncubationPerion() != 0) {
-				ppls[j].setIncubationPeriod(ppls[j].getIncubationPerion() - 1);
+				ppls[j].setIncubationPeriod( ppls[j].getIncubationPerion() - 1 );
 				if (ppls[j].getIncubationPerion() == 0) {
 					ppls[j].setInfective(true);
 				}
@@ -246,10 +246,10 @@ void Model::updateAgentStatus(int dt) {
 		// проверка заражённых рядом, заражение(установка инкубационного периода)
 		for (int j = 0; j < peoplesCount; j++) {
 			if (distancePplPpl(ppls[i], ppls[j]) < 2) {
-				if (true == ppls[j].getSickStatus()) {
+				if (true == ppls[j].getSickStatus() && ppls[j].getIncubationPerion() == 0) {
 					if (false == ppls[i].getSickStatus()) {
+						ppls[i].sickStatusUpdate(true);
 						ppls[i].setIncubationPeriod(2);
-						infected++;
 					}
 				}
 			}
