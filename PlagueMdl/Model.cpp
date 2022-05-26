@@ -110,6 +110,14 @@ void Model::destroy() {
 		delete[] docs;
 }
 
+int Model::getHowManySick() const {
+	int countSick = 0;
+	for (int i = 0; i < peoplesCount - 1; i++) {
+		if (true == ppls[i].getSickStatus())
+			countSick++;
+	}
+	return countSick;
+}
 
 // возврат  человека; доктора по индексу
 SimplePeople Model::getPplByInd(int ind) const {
