@@ -141,6 +141,7 @@ void Model::pushDoctor(Doctor d) {
 		tDocs[i] = docs[i];
 	}
 	delete[] docs;
+	//this comment doesn't exist
 	docs = tDocs;
 	docs[doctorsCount - 1] = d;
 
@@ -276,6 +277,7 @@ std::ostream& operator <<(std::ostream& out, Model& m) {
 		}
 	}
 	if (0 == m.doctorsCount)
+		//tets code
 		out << "No doctors" << std::endl;
 	else {
 		for (int i = 0; i < m.doctorsCount; i++) {
