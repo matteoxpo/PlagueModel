@@ -480,31 +480,53 @@ void Menu() {
 			std::cout << d;
 			break;
 		case 5:
-			std::cout << "Enter the data about people " << std::endl;
-			inputPeople(p);
-			try {
-				M.pushPeople(p);
-			}
-			catch (std::bad_alloc& err) {
-				std::cerr << "Caught: " << err.what() << std::endl;
-				std::cerr << "Type: " << typeid(err).name() << std::endl;
-				std::cout << std::endl;
-				std::cout << "end of program execution";
-				exit(EXIT_FAILURE);
+			safetyFlag = true;
+			while (true == safetyFlag) {
+				std::cout << "Enter the data about people " << std::endl;
+				try {
+					inputPeople(p);
+					if (abs(p.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
+					if (abs(p.getY()) > abs(ySize)) throw std::range_error("The person outside the map");
+					M.pushPeople(p);
+					safetyFlag = false;
+				}
+				catch (std::bad_alloc& err) {
+					std::cerr << "Caught: " << err.what() << std::endl;
+					std::cerr << "Type: " << typeid(err).name() << std::endl;
+					std::cout << std::endl;
+					std::cout << "end of program execution";
+					exit(EXIT_FAILURE);
+				}
+				catch (std::range_error& err) {
+					std::cerr << "Caught: " << err.what() << std::endl;
+					std::cerr << "Type: " << typeid(err).name() << std::endl;
+					std::cout << std::endl;
+				}
 			}
 			break;
 		case 6:
-			std::cout << "Enter the data about doctor " << std::endl;
-			inputDoctor(d);
-			try {
-				M.pushDoctor(d);
-			}
-			catch (std::bad_alloc& err) {
-				std::cerr << "Caught: " << err.what() << std::endl;
-				std::cerr << "Type: " << typeid(err).name() << std::endl;
-				std::cout << std::endl;
-				std::cout << "end of program execution";
-				exit(EXIT_FAILURE);
+			safetyFlag = true;
+			while (true == safetyFlag) {
+				std::cout << "Enter the data about doctor " << std::endl;
+				try {
+					inputDoctor(d);
+					if (abs(d.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
+					if (abs(d.getY()) > abs(ySize)) throw std::range_error("The person outside the map");
+					M.pushDoctor(d);
+					safetyFlag = false;
+				}
+				catch (std::bad_alloc& err) {
+					std::cerr << "Caught: " << err.what() << std::endl;
+					std::cerr << "Type: " << typeid(err).name() << std::endl;
+					std::cout << std::endl;
+					std::cout << "end of program execution";
+					exit(EXIT_FAILURE);
+				}
+				catch (std::range_error& err) {
+					std::cerr << "Caught: " << err.what() << std::endl;
+					std::cerr << "Type: " << typeid(err).name() << std::endl;
+					std::cout << std::endl;
+				}
 			}
 			break;
 		case 7:
