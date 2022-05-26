@@ -2,7 +2,7 @@
 #include <iostream>
 Doctor::Doctor() :
     xCoord{ 0 },
-    yCoord{ 0 },
+    /*asdasdvbjhvbu*/yCoord{0},
     xSpeed{ 0 },
     ySpeed{ 0 }
 {}
@@ -15,7 +15,7 @@ Doctor::Doctor(float x, float y, float xspeed, float yspeed) {
 
 void Doctor::positionUpdate() {
     xCoord += xSpeed;
-    yCoord += ySpeed;
+    /*asdsa*/yCoord += ySpeed; //asd
 }
 
 void Doctor::treat(SimplePeople &ppl) {
