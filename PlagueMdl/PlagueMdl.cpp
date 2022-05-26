@@ -134,15 +134,13 @@ void inputPeople(SimplePeople &p) {
 		inf = true;
 	}
 	else inf = false;
-	SimplePeople p1(xC,yC,xS,yS,sickStat,incPer,inf);
-	p = p1;
-	/*p.setX(xC);
+	p.setX(xC);
 	p.setY(yC);
 	p.setSpeedX(xS);
 	p.setSpeedY(yS);
 	p.sickStatusUpdate(sickStat);
 	p.setInfective(sickStat);
-	p.setIncubationPeriod(incPer);*/
+	p.setIncubationPeriod(incPer);
 }
 
 void Menu() {
@@ -297,10 +295,6 @@ void Menu() {
 			std::cout << std::endl;
 		}
 	}
-
-	switch (command) {
-	case 1:
-	}
 }
 
 
@@ -308,5 +302,5 @@ int main()
 {
 	SimplePeople p;
 	inputPeople(p);
-
+	std::cout << p;
 }

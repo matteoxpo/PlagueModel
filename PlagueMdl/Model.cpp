@@ -178,7 +178,7 @@ void Model::delDocByInd(int ind) {
 	docs = tDocs;
 }
 
-// методы подсчета расстония от человека к человеку/докутору
+// методы подсчета расстония от человека к человеку/доктору
 float Model::distancePplDoc(SimplePeople ppl, Doctor doc) const {
 	float xppl = ppl.getX();
 	float yppl = ppl.getY();
@@ -234,7 +234,7 @@ void Model::updateAgentStatus(int dt) {
 			}
 		}
 
-		// проверка заразных рядом, заражение(установка инкубационного периода)
+		// проверка заражённых рядом, заражение(установка инкубационного периода)
 		for (int j = 0; j < peoplesCount; j++) {
 			if (distancePplPpl(ppls[i], ppls[j]) < 2) {
 				if (true == ppls[j].getSickStatus()) {
