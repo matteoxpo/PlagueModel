@@ -347,13 +347,13 @@ void Menu() {
 				std::cout << std::endl;
 			}
 		}
-
+		std::cout << std::endl;
 	}
 	safetyFlag = true;
 	Doctor d;
 	for (int i = 0; i < docsCount; i++, safetyFlag = true) {
 		while (true == safetyFlag) {
-			std::cout << "Enter the data about the doctor #" << i << ":" << std::endl;
+			std::cout << "Enter the data person people #" << i << ":" << std::endl;
 			try {
 				inputDoctor(d);
 				if (abs(d.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
@@ -367,7 +367,7 @@ void Menu() {
 				std::cout << std::endl;
 			}
 		}
-
+		std::cout << std::endl;
 	}
 	safetyFlag = true;
 
@@ -392,6 +392,7 @@ void Menu() {
 		for (int i = 0; i < (sizeof(menu) / sizeof(menu[0])); i++) {
 			std::cout << menu[i] << std::endl;
 		}
+		safetyFlag = true;
 		while (true == safetyFlag) {
 			std::cout << std::endl << "Enter the command number: ";
 			try {
@@ -429,7 +430,7 @@ void Menu() {
 				input.clear();
 				std::cin >> input;
 				try {
-					ind = stof(input);
+					ind = stoi(input);
 					safetyFlag = false;
 				}
 				catch (std::invalid_argument& err) {
@@ -456,7 +457,7 @@ void Menu() {
 				input.clear();
 				std::cin >> input;
 				try {
-					ind = stof(input);
+					ind = stoi(input);
 					safetyFlag = false;
 				}
 				catch (std::invalid_argument& err) {
