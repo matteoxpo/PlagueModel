@@ -353,7 +353,7 @@ void Menu() {
 	Doctor d;
 	for (int i = 0; i < docsCount; i++, safetyFlag = true) {
 		while (true == safetyFlag) {
-			std::cout << "Enter the data person people #" << i << ":" << std::endl;
+			std::cout << "Enter the data about the doctor #" << i << ":" << std::endl;
 			try {
 				inputDoctor(d);
 				if (abs(d.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
@@ -585,8 +585,4 @@ int main()
 {
 	Menu();
 
-=======
-	SimplePeople p;
-	inputPeople(p);
-	std::cout << p;
 }
