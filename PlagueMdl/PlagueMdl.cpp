@@ -140,7 +140,7 @@ void inputPeople(SimplePeople &p) {
 	p.setY(yC);
 	p.setSpeedX(xS);
 	p.setSpeedY(yS);
-	p.sickStatusUpdate(sickStat);
+	p.sickStatusUpdate(sickStat, (sickStat) ? incPer : 0);
 	p.setInfective(sickStat);
 	p.setIncubationPeriod(incPer);
 
@@ -607,6 +607,6 @@ void Menu() {
 
 int main()
 {
-	//Menu();
+	Menu();
 	
 }

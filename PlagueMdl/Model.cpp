@@ -212,8 +212,6 @@ float Model::distancePplPpl(SimplePeople ppl1, SimplePeople ppl2) const {
 
 // обновление состояний агентов с временем dt
 void Model::updateAgentStatus(int dt) {
-	int infected = 0;
-	int treated = 0;
 	for (int i = 0; i < dt; i++) {
 		// проверка на выход за рамки поля, изменение направления в противном случае
 		if (nullptr != ppls) {
@@ -283,13 +281,12 @@ void Model::updateAgentStatus(int dt) {
 		}
 
 		// доктора лечат всех рядом стоящих людей на момент dt
-		if (nullptr != docs) {
+		if (nullptr != docs && nullptr != ppls) {
 			for (int j = 0; j < doctorsCount; j++) {
 				if (distancePplDoc(ppls[i], docs[j]) < 2) {
 					ppls[i].sickStatusUpdate(0, 0);
 					ppls[i].setIncubationPeriod(0);
 					ppls[i].setInfective(false);
-					treated++;
 				}
 			}
 		}
@@ -299,11 +296,6 @@ void Model::updateAgentStatus(int dt) {
 		if (nullptr != docs)
 		docs[i].positionUpdate();
 	}
-
-	/*std::cout << std::endl << "For the period dt:" << dt << std::endl;
-	std::cout << infected << "people was infected." << std::endl;
-	std::cout << treated << "people was treated." << std::endl;
-	*/
 }
 
 
