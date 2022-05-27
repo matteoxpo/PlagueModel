@@ -2,7 +2,7 @@
 #include <iostream>
 Doctor::Doctor() :
     xCoord{ 0 },
-    /*asdasdvbjhvbu*/yCoord{ 0 },
+    yCoord{ 0 },
     xSpeed{ 0 },
     ySpeed{ 0 }
 {}
