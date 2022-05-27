@@ -145,8 +145,6 @@ void inputPeople(SimplePeople &p) {
 	p.setIncubationPeriod(incPer);
 
 }
-
-
 void inputDoctor(Doctor& d) {
 	float xC = 0;
 	float yC = 0;
@@ -237,7 +235,7 @@ void inputDoctor(Doctor& d) {
 }
 
 void Menu() {
-
+	std::cout << "Plague model - agents doctors\n agents - people or doctors \n peoples can be infected, doctors can treat people...\n";
 	std::cout << "Creating model." << std::endl;
 	float xSize = -1, ySize = -1;
 	int pplsCount = -1, docsCount = -1;
