@@ -106,10 +106,10 @@ Model::~Model() {
 }
 
 void Model::destroy() {
-	if (ppls)
 		delete[] ppls;
-	if (docs)
+		ppls = nullptr;
 		delete[] docs;
+		docs = nullptr;
 }
 
 int Model::getHowManySick() const {

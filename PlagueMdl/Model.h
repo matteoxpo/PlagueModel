@@ -5,18 +5,6 @@
 
 class Model
 {
-	float xSize;
-	float ySize;
-
-	SimplePeople* ppls;
-	int peoplesCount;
-	
-	Doctor* docs;
-	int doctorsCount;
-
-	void destroy();
-	float distancePplDoc(SimplePeople, Doctor) const;
-	float distancePplPpl(SimplePeople, SimplePeople) const;
 public:
 	Model();
 	Model(float, float, int, int);
@@ -81,5 +69,19 @@ public:
 
 
 	friend std::ostream& operator <<(std::ostream&, Model&);
+	float distancePplDoc(SimplePeople, Doctor) const;
+	float distancePplPpl(SimplePeople, SimplePeople) const;
+
+private:
+	float xSize;
+	float ySize;
+
+	SimplePeople* ppls;
+	int peoplesCount;
+	
+	Doctor* docs;
+	int doctorsCount;
+
+	void destroy();
 };
 
