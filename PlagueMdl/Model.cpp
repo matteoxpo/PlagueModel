@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <string>
-
+#include <iterator>
 
 // конструктор по умолчанию
 Model::Model() :
@@ -117,19 +117,13 @@ void Model::delPplByInd(int ind) {
 	if (ind < 0) throw std::logic_error("Negative index!");
 	if (ind > ppls.size()) throw std::logic_error("Index is more than the number of peoples!");
 	if (ppls.size() == 0) throw std::logic_error("Nothing to delete!");
-	for (int i = ind; i < ppls.size() - 1; i++) {
-		ppls[i] = ppls[i + 1];
-	}
-	ppls.resize(ppls.size() - 1);
-	
+	ppls.erase(ppls.begin() + ind);
 }
 void Model::delDocByInd(int ind) {
 	if (ind < 0) throw std::logic_error("Negative index!");
 	if (ind > docs.size()) throw std::logic_error("Index is more than the number of peoples!");
 	if (docs.size() == 0) throw std::logic_error("Nothing to delete!");
-	std::vector <Doctor> Temp;
-	Temp.resize(docs.size() - 1);
-
+	docs.erase(docs.begin() + ind);
 }
 
 // методы подсчета расстония от человека к человеку/доктору
