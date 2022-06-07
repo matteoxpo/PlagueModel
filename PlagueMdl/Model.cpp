@@ -129,7 +129,7 @@ void Model::delDocByInd(int ind) {
 	if (docs.size() == 0) throw std::logic_error("Nothing to delete!");
 	std::vector <Doctor> Temp;
 	Temp.resize(docs.size() - 1);
-	copy(docs.begin(), ind, Temp);
+
 }
 
 // методы подсчета расстония от человека к человеку/доктору
