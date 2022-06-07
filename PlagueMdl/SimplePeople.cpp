@@ -2,56 +2,33 @@
 #include <string>
 #include <iostream>
 
-SimplePeople::SimplePeople() :
-    xCoord{ 0 },
-    yCoord{ 0 },
-    xSpeed{ 0 },
-    ySpeed{ 0 },
+SimplePeople::SimplePeople() : People(),
     sickStatus{ false },
     incubationPeriod{ 0 },
     infective{ false }
 {}
-SimplePeople::SimplePeople(const SimplePeople& other):
-    xCoord{ other.xCoord },
-    yCoord{ other.yCoord },
-    xSpeed{ other.xSpeed },
-    ySpeed{ other.ySpeed },
+SimplePeople::SimplePeople(const SimplePeople& other): People(other.xCoord, other.yCoord, other.xSpeed, other.ySpeed),
     sickStatus{ other.sickStatus },
     incubationPeriod{ other.incubationPeriod },
     infective{ other.infective }
 {}
 
 SimplePeople::SimplePeople(float x, float y, float xspeed, float yspeed) :
-    xCoord{x},
-    yCoord{y},
-    xSpeed{xspeed},
-    ySpeed{yspeed},
+    People(x,y,xspeed,yspeed),
     sickStatus{false},
     incubationPeriod{0},
     infective{false}
 {}
-SimplePeople::SimplePeople(float x, float y, float xspeed, float yspeed, bool sick, int incubPer, bool inf) {
-    if (incubationPeriod < 0) throw std::logic_error("Negative incubation period!");
-    xCoord = x;
-    yCoord = y;
-    xSpeed = xspeed;
-    ySpeed = yspeed;
-    sickStatus = sick;
+SimplePeople::SimplePeople(float x, float y, float xspeed, float yspeed, bool sick, int incubPer, bool inf): People(x,y,xspeed,yspeed),sickStatus(sick)
+{
+    if (incubPer < 0) throw std::logic_error("Negative incubation period!");
     incubationPeriod = incubPer;
     infective = inf;
 }
 
-
-void SimplePeople::positionUpdate() {
-    xCoord += xSpeed;
-    yCoord += ySpeed;
-}
 void SimplePeople::sickStatusUpdate(bool sick, int per) {
     sickStatus = sick;
     incubationPeriod = per;
-}
-void SimplePeople::infect() {
-
 }
 
 

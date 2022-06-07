@@ -1,17 +1,23 @@
 #pragma once
+#include <vector>
 #include <iostream>
 #include "SimplePeople.h" 
 #include "Doctor.h" 
 
 class Model
 {
+	float xSize;
+	float ySize;
+
+	std::vector <SimplePeople> ppls;
+
+	std::vector <Doctor> docs;
+
 public:
 	Model();
 	Model(float, float, int, int);
-	// все шо ниже блоксхемить
 	Model(const Model&);
 	Model(Model&&) noexcept;
-	~Model();
 	Model operator =(const Model&);
 	Model& operator =( Model&&) noexcept;
 
@@ -43,11 +49,11 @@ public:
 
 	// возврат количества человек
 	inline int getPplCount() const {
-		return peoplesCount;
+		return ppls.size();
 	}
 	// возврат количества докторов
 	inline int getDocCount() const {
-		return doctorsCount;
+		return docs.size();
 	}
 	// поиск челвека по индексу
 	SimplePeople getPplByInd(int) const;
@@ -72,16 +78,6 @@ public:
 	float distancePplDoc(SimplePeople, Doctor) const;
 	float distancePplPpl(SimplePeople, SimplePeople) const;
 
-private:
-	float xSize;
-	float ySize;
 
-	SimplePeople* ppls;
-	int peoplesCount;
-	
-	Doctor* docs;
-	int doctorsCount;
-
-	void destroy();
 };
 

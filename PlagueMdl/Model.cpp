@@ -9,10 +9,8 @@
 Model::Model() :
 	xSize{0},
 	ySize{0},
-	peoplesCount{0},
-	doctorsCount{0},
-	ppls{nullptr},
-	docs{nullptr}
+	ppls{0},
+	docs{0}
 {};
 //конструктор с параметрами
 Model::Model(float sizeX = 0, float sizeY = 0, int countPpls = 0, int countDocs = 0) {
@@ -22,33 +20,29 @@ Model::Model(float sizeX = 0, float sizeY = 0, int countPpls = 0, int countDocs 
 	xSize = sizeX;
 	ySize = sizeY;
 
-	peoplesCount = countPpls;
-	doctorsCount = countDocs;
 	if (0 == countPpls)
-		ppls = nullptr;
+		ppls.clear();
 	else
-		ppls = new SimplePeople[countPpls];
+		ppls.resize(countPpls);
 
 
 	if (0 == countDocs)
-		docs = nullptr;
+		docs.clear();
 	else
-		docs = new Doctor[countDocs];
+		docs.resize(countDocs);
 
 }
 // консутрктор копирования
 Model::Model(const Model& other): 
 	xSize{other.xSize},
 	ySize{other.ySize},
-	peoplesCount{other.peoplesCount},
-	ppls{new SimplePeople[other.peoplesCount]},
-	doctorsCount{other.doctorsCount},
-	docs{ new Doctor[other.doctorsCount] }
+	ppls{other.ppls.size()},
+	docs{other.docs.size()}
 {
-	for (int i = 0; i < peoplesCount; i++) {
+	for (int i = 0; i < ppls.size(); i++) {
 		ppls[i] = other.ppls[i];
 	}
-	for (int i = 0; i < doctorsCount; i++) {
+	for (int i = 0; i < docs.size(); i++) {
 		docs[i] = other.docs[i];
 	}
 }
@@ -57,18 +51,15 @@ Model::Model(const Model& other):
 Model::Model(Model&& other) noexcept :
 	xSize{ other.xSize },
 	ySize{ other.ySize },
-	doctorsCount {other.doctorsCount},
-	peoplesCount {other.peoplesCount},
 	ppls { other.ppls},
 	docs {other.docs} 
 {
-	other.ppls = nullptr;
-	other.docs = nullptr;
+	other.ppls.clear();
+	other.docs.clear();
 }
 
 //оператор присваивания
 Model Model::operator=(const Model& other) {
-	destroy();
 	xSize = other.xSize;
 	ySize = other.ySize;
 	peoplesCount = other.peoplesCount;
@@ -87,34 +78,21 @@ Model Model::operator=(const Model& other) {
 }
 //оператор перемещения
 Model& Model::operator=(Model&& other) noexcept {
-	destroy();
 	xSize = other.xSize;
 	ySize = other.ySize;
 
-	peoplesCount = other.peoplesCount;
-	doctorsCount = other.doctorsCount;
 
 	ppls = other.ppls;
 	docs = other.docs;
 
-	other.ppls = nullptr;
-	other.docs = nullptr;
+	other.ppls.clear();
+	other.docs.clear();
 	return *this;
-}
-Model::~Model() {
-	destroy();
-}
-
-void Model::destroy() {
-		delete[] ppls;
-		ppls = nullptr;
-		delete[] docs;
-		docs = nullptr;
 }
 
 int Model::getHowManySick() const {
 	int countSick = 0;
-	for (int i = 0; i < peoplesCount; i++) {
+	for (int i = 0; i < ppls.size(); i++) {
 		if (true == ppls[i].getSickStatus())
 			countSick++;
 	}
@@ -123,70 +101,42 @@ int Model::getHowManySick() const {
 
 // возврат  человека; доктора по индексу
 SimplePeople Model::getPplByInd(int ind) const {
-	if (ind > peoplesCount - 1) throw std::logic_error("There are fewer people than the index.");
+	if (ind > ppls.size() - 1) throw std::logic_error("There are fewer people than the index.");
 	if (ind < 0) throw std::logic_error("The index cannot be negative.");
 	return ppls[ind];
 }
 Doctor Model::getDocByInd(int ind) const {
-	if (ind > doctorsCount - 1) throw std::logic_error("There are fewer doctors than the index.");
+	if (ind > docs.size() - 1) throw std::logic_error("There are fewer doctors than the index.");
 	if (ind < 0) throw std::logic_error("The index cannot be negative.");
 	return docs[ind];
 }
 
 // добавление человека; доктора
 void Model::pushPeople(SimplePeople p) {
-	peoplesCount++;
-	SimplePeople* tPpls = new SimplePeople[peoplesCount ];
-	for (int i = 0; i < peoplesCount - 1; i++) {
-		tPpls[i] = ppls[i];
-	}
-	delete[] ppls;
-	ppls = tPpls;
-	ppls[peoplesCount - 1] = p;
+	ppls.resize(ppls.size() + 1);
+	ppls[ppls.size() - 1] = p;
 }
 void Model::pushDoctor(Doctor d) {
-	doctorsCount++;
-	Doctor* tDocs = new Doctor[doctorsCount];
-	for (int i = 0; i < doctorsCount - 1; i++) {
-		tDocs[i] = docs[i];
-	}
-	delete[] docs;
-	//this comment doesn't exist
-	docs = tDocs;
-	docs[doctorsCount - 1] = d;
-
+	docs.resize(docs.size() + 1);
+	docs[docs.size() - 1] = d;
 }
 
 // удаление человека; доктора по индексу
 void Model::delPplByInd(int ind) {
 	if (ind < 0) throw std::logic_error("Negative index!");
-	if (ind > peoplesCount) throw std::logic_error("Index is more than the number of peoples!");
-	if (peoplesCount == 0) throw std::logic_error("Nothing to delete!");
-
-	peoplesCount--;
-	SimplePeople* tPpls = new SimplePeople[peoplesCount];
-	for (int i = 0, j = 0; i < peoplesCount + 1; i++, j++) {
-		if (i == ind)
-			i++;
-		tPpls[j] = ppls[i];
+	if (ind > ppls.size()) throw std::logic_error("Index is more than the number of peoples!");
+	if (ppls.size() == 0) throw std::logic_error("Nothing to delete!");
+	for (int i = ind; i < ppls.size() - 1; i++) {
+		ppls[i] = ppls[i + 1];
 	}
-	delete[] ppls;
-	ppls = tPpls;
+	ppls.resize(ppls.size() - 1);
+	
 }
 void Model::delDocByInd(int ind) {
 	if (ind < 0) throw std::logic_error("Negative index!");
-	if (ind > doctorsCount) throw std::logic_error("Index is more than the number of peoples!");
-	if (doctorsCount == 0) throw std::logic_error("Nothing to delete!");
+	if (ind > docs.size()) throw std::logic_error("Index is more than the number of peoples!");
+	if (docs.size() == 0) throw std::logic_error("Nothing to delete!");
 
-	doctorsCount--;
-	Doctor* tDocs = new Doctor[doctorsCount];
-	for (int i = 0, j = 0; i < doctorsCount + 1; i++, j++) {
-		if (i == ind)
-			i++;
-		tDocs[j] = docs[i];
-	}
-	delete[] docs;
-	docs = tDocs;
 }
 
 // методы подсчета расстония от человека к человеку/доктору
@@ -216,10 +166,10 @@ float Model::distancePplPpl(SimplePeople ppl1, SimplePeople ppl2) const {
 void Model::updateAgentStatus(int dt) {
 	for (int k = 0; k < dt; k++) {
 
-		if (0 != doctorsCount && 0 != peoplesCount) {
-			for (int i = 0; i < peoplesCount; i++) {
-				for (int j = 0; j < doctorsCount; j++) {
-					for (int j = 0; j < doctorsCount; j++) {
+		if (0 != docs.size()  || 0 != ppls.size()) {
+			for (int i = 0; i < ppls.size(); i++) {
+				for (int j = 0; j < docs.size(); j++) {
+					for (int j = 0; j < docs.size(); j++) {
 						if (distancePplDoc(ppls[i], docs[j]) < 2) {
 							ppls[i].sickStatusUpdate(0, 0);
 							ppls[i].setIncubationPeriod(0);
@@ -230,9 +180,9 @@ void Model::updateAgentStatus(int dt) {
 			}
 		}
 
-		if (0 != peoplesCount) {
-			for (int i = 0; i < peoplesCount; i++) {
-				ppls[i].positionUpdate();
+		if (0 != ppls.size()) {
+			for (int i = 0; i < ppls.size(); i++) {
+				ppls[i].positionUpdate(1);
 
 
 				if (ppls[i].getX() > xSize) {
@@ -253,7 +203,7 @@ void Model::updateAgentStatus(int dt) {
 				}
 
 
-				for (int j = 0; j < peoplesCount; j++) {
+				for (int j = 0; j < ppls.size(); j++) {
 					if (ppls[j].getIncubationPerion() != 0) {
 						ppls[j].setIncubationPeriod(ppls[j].getIncubationPerion() - 1);
 						if (ppls[j].getIncubationPerion() == 0) {
@@ -262,7 +212,7 @@ void Model::updateAgentStatus(int dt) {
 					}
 
 				}
-				for (int j = 0; j < peoplesCount; j++) {
+				for (int j = 0; j < ppls.size(); j++) {
 					if (distancePplPpl(ppls[i], ppls[j]) < 2) {
 						if (true == ppls[j].getSickStatus() && ppls[j].getIncubationPerion() == 0) {
 							if (false == ppls[i].getSickStatus()) {
@@ -275,9 +225,9 @@ void Model::updateAgentStatus(int dt) {
 			}
 		}
 		
-		if (0 != doctorsCount) {
-			for (int i = 0; i < doctorsCount; i++) {
-				docs[i].positionUpdate();
+		if (0 != docs.size()) {
+			for (int i = 0; i < docs.size(); i++) {
+				docs[i].positionUpdate(1);
 
 				if (docs[i].getX() > xSize) {
 					docs[i].setX(xSize);
@@ -304,19 +254,19 @@ void Model::updateAgentStatus(int dt) {
 
 
 std::ostream& operator <<(std::ostream& out, Model& m) {
-	if (0 == m.peoplesCount)
+	if (0 == m.ppls.size())
 		out << "No peoples" << std::endl;
 	else {
-		for (int i = 0; i < m.peoplesCount; i++) {
+		for (int i = 0; i < m.ppls.size(); i++) {
 			out << "People #" << i + 1 << std::endl;
 			out << m.ppls[i];
 		}
 	}
-	if (0 == m.doctorsCount)
+	if (0 == m.docs.size())
 		//tets code
 		out << "No doctors" << std::endl;
 	else {
-		for (int i = 0; i < m.doctorsCount; i++) {
+		for (int i = 0; i < m.docs.size(); i++) {
 			out << "Doctor #" << i + 1 << std::endl;
 			out << m.docs[i];
 		}

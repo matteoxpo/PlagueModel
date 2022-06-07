@@ -1,22 +1,7 @@
 #include "Doctor.h"
 #include <iostream>
-Doctor::Doctor() :
-    xCoord{ 0 },
-    yCoord{ 0 },
-    xSpeed{ 0 },
-    ySpeed{ 0 }
-{}
-Doctor::Doctor(float x, float y, float xspeed, float yspeed) {
-    xCoord = x;
-    yCoord = y;
-    xSpeed = xspeed;
-    ySpeed = yspeed;
-}
-
-void Doctor::positionUpdate() {
-    xCoord += xSpeed;
-    yCoord += ySpeed;
-}
+Doctor::Doctor() : People(){}
+Doctor::Doctor(float x, float y, float xspeed, float yspeed) : People(x,y,xspeed,yspeed) {}
 
 void Doctor::treat(SimplePeople& ppl) {
     ppl.sickStatusUpdate(false, 0);

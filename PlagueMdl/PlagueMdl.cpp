@@ -606,5 +606,6 @@ void Menu() {
 int main()
 {
 	Menu();
-	
+	//SimplePeople p(1,2,3,4,0 ,0 ,0);
+	//std::cout << p;
 }
