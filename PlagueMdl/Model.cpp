@@ -62,17 +62,8 @@ Model::Model(Model&& other) noexcept :
 Model Model::operator=(const Model& other) {
 	xSize = other.xSize;
 	ySize = other.ySize;
-	peoplesCount = other.peoplesCount;
-	doctorsCount = other.doctorsCount;
-	ppls = new SimplePeople[peoplesCount];
-	docs = new Doctor[doctorsCount];
-
-	for (int i = 0; i < peoplesCount; i++) {
-		ppls[i] = other.ppls[i];
-	}
-	for (int i = 0; i < doctorsCount; i++) {
-		docs[i] = other.docs[i];
-	}
+	ppls = other.ppls;
+	docs = other.docs;
 
 	return *this;
 }
@@ -136,7 +127,9 @@ void Model::delDocByInd(int ind) {
 	if (ind < 0) throw std::logic_error("Negative index!");
 	if (ind > docs.size()) throw std::logic_error("Index is more than the number of peoples!");
 	if (docs.size() == 0) throw std::logic_error("Nothing to delete!");
-
+	std::vector <Doctor> Temp;
+	Temp.resize(docs.size() - 1);
+	copy(docs.begin(), ind, Temp);
 }
 
 // методы подсчета расстония от человека к человеку/доктору
