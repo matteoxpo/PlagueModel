@@ -10,16 +10,11 @@ class Model
 	float ySize;
 
 	std::vector <SimplePeople> ppls;
-
-	std::vector <Doctor> docs;
+	std::vector <std::shared_ptr<Doctor>> docs;
 
 public:
 	Model();
 	Model(float, float, int, int);
-	Model(const Model&);
-	Model(Model&&) noexcept;
-	Model operator =(const Model&);
-	Model& operator =( Model&&) noexcept;
 
 
 
@@ -33,8 +28,8 @@ public:
 	inline void setPeople(SimplePeople p, int ind) {
 		ppls[ind] = p;
 	}
-	inline void setDoctor(Doctor d, int ind) {
-		docs[ind] = d;
+	inline void setDoctor(std::shared_ptr<Doctor> Dptr, int ind) {
+		docs[ind] = Dptr;
 	}
 	
 	// возврат размера карты
@@ -65,7 +60,7 @@ public:
 	// добавление человека
 	void pushPeople(SimplePeople);
 	// добавление доктора
-	void pushDoctor(Doctor);
+	void pushDoctor(std::shared_ptr<Doctor>);
 
 	void delPplByInd(int);
 	void delDocByInd(int);
@@ -75,7 +70,7 @@ public:
 
 
 	friend std::ostream& operator <<(std::ostream&, Model&);
-	float distancePplDoc(SimplePeople, Doctor) const;
+	float distancePplDoc(SimplePeople, std::shared_ptr<Doctor> Dptr) const;
 	float distancePplPpl(SimplePeople, SimplePeople) const;
 
 

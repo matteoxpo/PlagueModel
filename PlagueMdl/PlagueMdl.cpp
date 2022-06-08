@@ -145,7 +145,7 @@ void inputPeople(SimplePeople &p) {
 	p.setIncubationPeriod(incPer);
 
 }
-void inputDoctor(Doctor& d) {
+void inputDoctor(std::shared_ptr<Doctor> Dptr) {
 	float xC = 0;
 	float yC = 0;
 	float xS = 0;
@@ -227,11 +227,14 @@ void inputDoctor(Doctor& d) {
 	}
 	safetyFlag = true;
 
-	
-	d.setX(xC);
+	Dptr->setX(xC);
+	Dptr->setY(yC);
+	Dptr->setSpeedX(xS);
+	Dptr->setSpeedY(yS);
+	/*d.setX(xC);
 	d.setY(yC);
 	d.setSpeedX(xS);
-	d.setSpeedY(yS);
+	d.setSpeedY(yS);*/
 }
 
 void Menu() {
@@ -348,16 +351,18 @@ void Menu() {
 		std::cout << std::endl;
 	}
 	safetyFlag = true;
-	Doctor d;
+	
+	
+	auto Dptr = std::make_shared<Doctor>();
 	for (int i = 0; i < docsCount; i++, safetyFlag = true) {
 		while (true == safetyFlag) {
 			std::cout << "Enter the data about doctor #" << i << ":" << std::endl;
 			try {
-				inputDoctor(d);
-				if (abs(d.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
-				if (abs(d.getY()) > abs(ySize)) throw std::range_error("The person outside the map");
+				inputDoctor(Dptr);
+				if (abs(Dptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
+				if (abs(Dptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
 				safetyFlag = false;
-				M.setDoctor(d, i);
+				M.setDoctor(Dptr, i);
 			}
 			catch (std::range_error& err) {
 				std::cerr << "Caught: " << err.what() << std::endl;
@@ -385,6 +390,7 @@ void Menu() {
 	//ввод команды
 	int ind = 0;
 	int dt = 0;
+	Doctor d;
 	while (true) {
 		std::cout << std::endl;
 		for (int i = 0; i < (sizeof(menu) / sizeof(menu[0])); i++) {
@@ -505,10 +511,10 @@ void Menu() {
 			while (true == safetyFlag) {
 				std::cout << "Enter the data about doctor " << std::endl;
 				try {
-					inputDoctor(d);
-					if (abs(d.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
-					if (abs(d.getY()) > abs(ySize)) throw std::range_error("The person outside the map");
-					M.pushDoctor(d);
+					inputDoctor(Dptr);
+					if (abs(Dptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
+					if (abs(Dptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
+					M.pushDoctor(Dptr);
 					safetyFlag = false;
 				}
 				catch (std::bad_alloc& err) {

@@ -32,54 +32,7 @@ Model::Model(float sizeX = 0, float sizeY = 0, int countPpls = 0, int countDocs 
 		docs.resize(countDocs);
 
 }
-// консутрктор копирования
-Model::Model(const Model& other): 
-	xSize{other.xSize},
-	ySize{other.ySize},
-	ppls{other.ppls.size()},
-	docs{other.docs.size()}
-{
-	for (int i = 0; i < ppls.size(); i++) {
-		ppls[i] = other.ppls[i];
-	}
-	for (int i = 0; i < docs.size(); i++) {
-		docs[i] = other.docs[i];
-	}
-}
 
-// конструктор пермещения
-Model::Model(Model&& other) noexcept :
-	xSize{ other.xSize },
-	ySize{ other.ySize },
-	ppls { other.ppls},
-	docs {other.docs} 
-{
-	other.ppls.clear();
-	other.docs.clear();
-}
-
-//оператор присваивания
-Model Model::operator=(const Model& other) {
-	xSize = other.xSize;
-	ySize = other.ySize;
-	ppls = other.ppls;
-	docs = other.docs;
-
-	return *this;
-}
-//оператор перемещения
-Model& Model::operator=(Model&& other) noexcept {
-	xSize = other.xSize;
-	ySize = other.ySize;
-
-
-	ppls = other.ppls;
-	docs = other.docs;
-
-	other.ppls.clear();
-	other.docs.clear();
-	return *this;
-}
 
 int Model::getHowManySick() const {
 	int countSick = 0;
@@ -99,7 +52,7 @@ SimplePeople Model::getPplByInd(int ind) const {
 Doctor Model::getDocByInd(int ind) const {
 	if (ind > docs.size() - 1) throw std::logic_error("There are fewer doctors than the index.");
 	if (ind < 0) throw std::logic_error("The index cannot be negative.");
-	return docs[ind];
+	return *docs[ind];
 }
 
 // добавление человека; доктора
@@ -107,7 +60,7 @@ void Model::pushPeople(SimplePeople p) {
 	ppls.resize(ppls.size() + 1);
 	ppls[ppls.size() - 1] = p;
 }
-void Model::pushDoctor(Doctor d) {
+void Model::pushDoctor(std::shared_ptr<Doctor> d) {
 	docs.resize(docs.size() + 1);
 	docs[docs.size() - 1] = d;
 }
@@ -127,12 +80,12 @@ void Model::delDocByInd(int ind) {
 }
 
 // методы подсчета расстония от человека к человеку/доктору
-float Model::distancePplDoc(SimplePeople ppl, Doctor doc) const {
+float Model::distancePplDoc(SimplePeople ppl, std::shared_ptr<Doctor> doc) const {
 	float xppl = ppl.getX();
 	float yppl = ppl.getY();
 
-	float xdoc = doc.getX();
-	float ydoc = doc.getY();
+	float xdoc = doc->getX();
+	float ydoc = doc->getY();
 
 	float dist = (float)sqrt(pow(xppl - xdoc, 2) + pow(yppl - ydoc, 2));
 	return dist;
@@ -214,23 +167,23 @@ void Model::updateAgentStatus(int dt) {
 		
 		if (0 != docs.size()) {
 			for (int i = 0; i < docs.size(); i++) {
-				docs[i].positionUpdate(1);
+				docs[i]->positionUpdate(1);
 
-				if (docs[i].getX() > xSize) {
-					docs[i].setX(xSize);
-					docs[i].setSpeedX(-docs[i].getSpeedX());
+				if (docs[i]->getX() > xSize) {
+					docs[i]->setX(xSize);
+					docs[i]->setSpeedX(-docs[i]->getSpeedX());
 				}
-				if (docs[i].getX() < -xSize) {
-					docs[i].setX(-xSize);
-					docs[i].setSpeedX(-docs[i].getSpeedX());
+				if (docs[i]->getX() < -xSize) {
+					docs[i]->setX(-xSize);
+					docs[i]->setSpeedX(-docs[i]->getSpeedX());
 				}
-				if (docs[i].getY() > ySize) {
-					docs[i].setY(ySize);
-					docs[i].setSpeedY(-docs[i].getSpeedY());
+				if (docs[i]->getY() > ySize) {
+					docs[i]->setY(ySize);
+					docs[i]->setSpeedY(-docs[i]->getSpeedY());
 				}
-				if (docs[i].getY() < -ySize) {
-					docs[i].setY(-ySize);
-					docs[i].setSpeedY(-docs[i].getSpeedY());
+				if (docs[i]->getY() < -ySize) {
+					docs[i]->setY(-ySize);
+					docs[i]->setSpeedY(-docs[i]->getSpeedY());
 				}
 			}
 		}
@@ -255,7 +208,10 @@ std::ostream& operator <<(std::ostream& out, Model& m) {
 	else {
 		for (int i = 0; i < m.docs.size(); i++) {
 			out << "Doctor #" << i + 1 << std::endl;
-			out << m.docs[i];
+			out << "X coord: " << m.docs[i]->getX() << '\n';
+			out << "Y coord: " << m.docs[i]->getY() << '\n';
+			out << "X speed: " << m.docs[i]->getSpeedX() << '\n';
+			out << "Y speed: " << m.docs[i]->getSpeedY() << '\n';
 		}
 	}
 	return out;
