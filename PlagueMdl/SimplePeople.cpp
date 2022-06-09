@@ -48,10 +48,17 @@ std::ostream& operator <<(std::ostream& out, SimplePeople& p) {
         return out;
 }
 
-/*
-std::ostream& operator<<(std::ostream& out,SimplePeople ppl)
-{
-    out << "x coord: " << ppl.getX();
+std::ostream& operator <<(std::ostream& out, std::shared_ptr<SimplePeople> p) {
+    out << "X coord: " << p->getX() << std::endl;
+    out << "Y coord: " << p->getY() << std::endl;
+    out << "X speed: " << p->getSpeedX() << std::endl;
+    out << "Y speed: " << p->getSpeedY() << std::endl;
+    out << "Incubation period: " << p->getIncubationPerion() << std::endl;
+    out << "Sick status: " << p->getSickStatus();
+    if (p->getSickStatus() == true)
+        out << " - is ill" << std::endl;
+    else
+        out << " - isn't ill" << std::endl;
+    std::cout << std::endl;
     return out;
 }
-*/

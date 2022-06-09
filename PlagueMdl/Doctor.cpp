@@ -5,7 +5,7 @@ Doctor::Doctor(float x, float y, float xspeed, float yspeed) : People(x,y,xspeed
 
 void Doctor::treat(SimplePeople& ppl) {
     ppl.sickStatusUpdate(false, 0);
-    //asdasd
+    //sdasd
 }
 
 std::ostream& operator <<(std::ostream& out, Doctor& d) {
@@ -13,6 +13,14 @@ std::ostream& operator <<(std::ostream& out, Doctor& d) {
     out << "Y coord: " << d.getY() << std::endl;
     out << "X speed: " << d.getSpeedX() << std::endl;
     out << "Y speed: " << d.getSpeedY() << std::endl;
+    out << std::endl;
+    return out;
+}
+std::ostream& operator <<(std::ostream& out, std::shared_ptr<Doctor> d) {
+    out << "X coord: " << d->getX() << std::endl;
+    out << "Y coord: " << d->getY() << std::endl;
+    out << "X speed: " << d->getSpeedX() << std::endl;
+    out << "Y speed: " << d->getSpeedY() << std::endl;
     out << std::endl;
     return out;
 }

@@ -30,5 +30,6 @@ public:
     void sickStatusUpdate(bool,int);
 
     friend std::ostream& operator <<(std::ostream&, SimplePeople&);
+    friend std::ostream& operator <<(std::ostream&, std::shared_ptr<SimplePeople>);
 };
 

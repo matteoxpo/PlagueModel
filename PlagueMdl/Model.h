@@ -9,10 +9,11 @@ class Model
 	float xSize;
 	float ySize;
 
-	std::vector <SimplePeople> ppls;
+	std::vector <std::shared_ptr<SimplePeople>> ppls;
 	std::vector <std::shared_ptr<Doctor>> docs;
-	std::vector <pair < std::shared_ptr<People>, std::shared_ptr<People> >> all;
 
+	float distance(std::shared_ptr<SimplePeople >, std::shared_ptr<Doctor>) const;
+	float distance(std::shared_ptr<SimplePeople >, std::shared_ptr<SimplePeople >) const;
 public:
 	Model();
 	Model(float, float, int, int);
@@ -26,7 +27,7 @@ public:
 	inline void setYSize(float y) {
 		ySize = y;
 	}
-	inline void setPeople(SimplePeople p, int ind) {
+	inline void setPeople(std::shared_ptr<SimplePeople> p, int ind) {
 		ppls[ind] = p;
 	}
 	inline void setDoctor(std::shared_ptr<Doctor> Dptr, int ind) {
@@ -51,22 +52,14 @@ public:
 	SimplePeople getPplByInd(int) const;
 	Doctor getDocByInd(int) const;
 
-
-
-	void pushPeople(SimplePeople);
-	void pushDoctor(std::shared_ptr<Doctor>);
+	void push(std::shared_ptr<SimplePeople>);
+	void push(std::shared_ptr<Doctor>);
 
 	void delPplByInd(int);
 	void delDocByInd(int);
 
-
 	void updateAgentStatus(int);
 
-
 	friend std::ostream& operator <<(std::ostream&, Model&);
-	float distancePplDoc(SimplePeople, std::shared_ptr<Doctor> Dptr) const;
-	float distancePplPpl(SimplePeople, SimplePeople) const;
-
-
 };
 

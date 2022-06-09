@@ -11,5 +11,6 @@ public:
     void treat(SimplePeople &);
 
     friend std::ostream& operator <<(std::ostream&, Doctor&);
+    friend std::ostream& operator <<(std::ostream&, std::shared_ptr<Doctor>);
 };
 

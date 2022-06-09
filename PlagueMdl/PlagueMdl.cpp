@@ -6,7 +6,7 @@
 #include "Model.h"
 
 
-void inputPeople(SimplePeople &p) {
+void inputPeople(std::shared_ptr<SimplePeople> Pptr) {
 	float xC = 0;
 	float yC = 0;
 	float xS = 0;
@@ -110,7 +110,7 @@ void inputPeople(SimplePeople &p) {
 	//incubationPeriod
 	if (true == sickStat) {
 		while (true == safetyFlag) {
-			if (false == p.getSickStatus()) safetyFlag = false;
+			if (false == Pptr->getSickStatus()) safetyFlag = false;
 			std::cout << "Enter incubation period: ";
 			input.clear();
 			std::cin >> input;
@@ -136,13 +136,13 @@ void inputPeople(SimplePeople &p) {
 		inf = true;
 	}
 	else inf = false;
-	p.setX(xC);
-	p.setY(yC);
-	p.setSpeedX(xS);
-	p.setSpeedY(yS);
-	p.sickStatusUpdate(sickStat, (sickStat) ? incPer : 0);
-	p.setInfective(sickStat);
-	p.setIncubationPeriod(incPer);
+	Pptr->setX(xC);
+	Pptr->setY(yC);
+	Pptr->setSpeedX(xS);
+	Pptr->setSpeedY(yS);
+	Pptr->sickStatusUpdate(sickStat, (sickStat) ? incPer : 0);
+	Pptr->setInfective(sickStat);
+	Pptr->setIncubationPeriod(incPer);
 
 }
 void inputDoctor(std::shared_ptr<Doctor> Dptr) {
@@ -331,16 +331,18 @@ void Menu() {
 		std::cout << "end of program execution";
 		exit(EXIT_FAILURE);
 	}
-	SimplePeople p;
+	auto Pptr = std::make_shared<SimplePeople>();
 	for (int i = 0; i < pplsCount; i++, safetyFlag = true) {
 		while (true == safetyFlag) {
 			std::cout << "Enter the data about people #" << i << ":" << std::endl;
 			try {
-				inputPeople(p);
-				if (abs(p.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
-				if (abs(p.getY()) > abs(ySize)) throw std::range_error("The person outside the map");
+				inputPeople(Pptr);
+				std::cout << Pptr << '\n';
+				if (abs(Pptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
+				if (abs(Pptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
 				safetyFlag = false;
-				M.setPeople(p, i);
+				M.setPeople(Pptr, i);
+				std::cout << '\n' << M << '\n';
 			}
 			catch (std::range_error& err) {
 				std::cerr << "Caught: " << err.what() << std::endl;
@@ -390,6 +392,7 @@ void Menu() {
 	//ввод команды
 	int ind = 0;
 	int dt = 0;
+	SimplePeople p;
 	Doctor d;
 	while (true) {
 		std::cout << std::endl;
@@ -486,10 +489,10 @@ void Menu() {
 			while (true == safetyFlag) {
 				std::cout << "Enter the data about people " << std::endl;
 				try {
-					inputPeople(p);
-					if (abs(p.getX()) > abs(xSize)) throw std::range_error("The person outside the map");
-					if (abs(p.getY()) > abs(ySize)) throw std::range_error("The person outside the map");
-					M.pushPeople(p);
+					inputPeople(Pptr);
+					if (abs(Pptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
+					if (abs(Pptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
+					M.push(Pptr);
 					safetyFlag = false;
 				}
 				catch (std::bad_alloc& err) {
@@ -514,7 +517,7 @@ void Menu() {
 					inputDoctor(Dptr);
 					if (abs(Dptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
 					if (abs(Dptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
-					M.pushDoctor(Dptr);
+					M.push(Dptr);
 					safetyFlag = false;
 				}
 				catch (std::bad_alloc& err) {
@@ -612,6 +615,5 @@ void Menu() {
 int main()
 {
 	Menu();
-	//SimplePeople p(1,2,3,4,0 ,0 ,0);
-	//std::cout << p;
+	
 }
