@@ -5,6 +5,7 @@ Doctor::Doctor(float x, float y, float xspeed, float yspeed) : People(x,y,xspeed
 
 void Doctor::treat(SimplePeople& ppl) {
     ppl.sickStatusUpdate(false, 0);
+    //asdasd
 }
 
 std::ostream& operator <<(std::ostream& out, Doctor& d) {

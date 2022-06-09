@@ -11,6 +11,7 @@ class Model
 
 	std::vector <SimplePeople> ppls;
 	std::vector <std::shared_ptr<Doctor>> docs;
+	std::vector <pair < std::shared_ptr<People>, std::shared_ptr<People> >> all;
 
 public:
 	Model();
@@ -32,7 +33,6 @@ public:
 		docs[ind] = Dptr;
 	}
 	
-	// возврат размера карты
 	inline float getXSize() const {
 		return xSize;
 	}
@@ -42,24 +42,18 @@ public:
 
 	int getHowManySick() const;
 
-	// возврат количества человек
 	inline int getPplCount() const {
 		return ppls.size();
 	}
-	// возврат количества докторов
 	inline int getDocCount() const {
 		return docs.size();
 	}
-	// поиск челвека по индексу
 	SimplePeople getPplByInd(int) const;
-	// поиск доктора по индексу
 	Doctor getDocByInd(int) const;
 
 
 
-	// добавление человека
 	void pushPeople(SimplePeople);
-	// добавление доктора
 	void pushDoctor(std::shared_ptr<Doctor>);
 
 	void delPplByInd(int);
