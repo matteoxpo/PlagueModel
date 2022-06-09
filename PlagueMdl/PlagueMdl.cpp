@@ -4,9 +4,11 @@
 #include <stdexcept>
 #include <math.h>
 #include "Model.h"
+#include <memory>
 
 
-void inputPeople(std::shared_ptr<SimplePeople> Pptr) {
+std::shared_ptr<SimplePeople> inputPeople() {
+	std::shared_ptr<SimplePeople> Pptr = std::make_shared<SimplePeople>();
 	float xC = 0;
 	float yC = 0;
 	float xS = 0;
@@ -143,9 +145,10 @@ void inputPeople(std::shared_ptr<SimplePeople> Pptr) {
 	Pptr->sickStatusUpdate(sickStat, (sickStat) ? incPer : 0);
 	Pptr->setInfective(sickStat);
 	Pptr->setIncubationPeriod(incPer);
-
+	return Pptr;
 }
-void inputDoctor(std::shared_ptr<Doctor> Dptr) {
+std::shared_ptr<Doctor> inputDoctor() {
+	std::shared_ptr<Doctor> Dptr = std::make_shared<Doctor>();
 	float xC = 0;
 	float yC = 0;
 	float xS = 0;
@@ -235,6 +238,7 @@ void inputDoctor(std::shared_ptr<Doctor> Dptr) {
 	d.setY(yC);
 	d.setSpeedX(xS);
 	d.setSpeedY(yS);*/
+	return Dptr;
 }
 
 void Menu() {
@@ -336,14 +340,11 @@ void Menu() {
 		while (true == safetyFlag) {
 			std::cout << "Enter the data about people #" << i << ":" << std::endl;
 			try {
-				Pptr = nullptr;
-				inputPeople(Pptr);
-				std::cout << Pptr << '\n';
+				Pptr = inputPeople();
 				if (abs(Pptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
 				if (abs(Pptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
 				safetyFlag = false;
 				M.setPeople(Pptr, i);
-				std::cout << '\n' << M << '\n';
 			}
 			catch (std::range_error& err) {
 				std::cerr << "Caught: " << err.what() << std::endl;
@@ -361,7 +362,7 @@ void Menu() {
 		while (true == safetyFlag) {
 			std::cout << "Enter the data about doctor #" << i << ":" << std::endl;
 			try {
-				inputDoctor(Dptr);
+				Dptr = inputDoctor();
 				if (abs(Dptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
 				if (abs(Dptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
 				safetyFlag = false;
@@ -490,7 +491,7 @@ void Menu() {
 			while (true == safetyFlag) {
 				std::cout << "Enter the data about people " << std::endl;
 				try {
-					inputPeople(Pptr);
+					Pptr = inputPeople();
 					if (abs(Pptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
 					if (abs(Pptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
 					M.push(Pptr);
@@ -515,7 +516,7 @@ void Menu() {
 			while (true == safetyFlag) {
 				std::cout << "Enter the data about doctor " << std::endl;
 				try {
-					inputDoctor(Dptr);
+					Dptr = inputDoctor();
 					if (abs(Dptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
 					if (abs(Dptr->getY()) > abs(ySize)) throw std::range_error("The person outside the map");
 					M.push(Dptr);
