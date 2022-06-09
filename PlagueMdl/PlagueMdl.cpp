@@ -336,6 +336,7 @@ void Menu() {
 		while (true == safetyFlag) {
 			std::cout << "Enter the data about people #" << i << ":" << std::endl;
 			try {
+				Pptr = nullptr;
 				inputPeople(Pptr);
 				std::cout << Pptr << '\n';
 				if (abs(Pptr->getX()) > abs(xSize)) throw std::range_error("The person outside the map");
