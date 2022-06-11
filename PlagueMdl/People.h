@@ -1,7 +1,7 @@
 #pragma once
+#include <iostream>
 class People
 {
-
 protected:
     float xCoord;
     float yCoord;
@@ -39,7 +39,8 @@ public:
     }
 
     void positionUpdate(int dt);
-
+    //virtual std::ostream& operator <<(std::ostream&) = 0;
+    virtual void Nothing() = 0;
 
 };
 

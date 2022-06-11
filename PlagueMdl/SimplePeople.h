@@ -9,7 +9,6 @@ class SimplePeople : public People
 
 public: 
     SimplePeople();
-    SimplePeople(const SimplePeople&);
     SimplePeople(float, float, float, float);
     SimplePeople(float, float, float, float, bool, int, bool);
 
@@ -29,7 +28,8 @@ public:
     
     void sickStatusUpdate(bool,int);
 
-    friend std::ostream& operator <<(std::ostream&, SimplePeople&);
+    void Nothing();
+   // std::ostream& operator <<(std::ostream&);
     friend std::ostream& operator <<(std::ostream&, std::shared_ptr<SimplePeople>);
 };
 

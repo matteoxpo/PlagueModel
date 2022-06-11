@@ -457,7 +457,7 @@ void Menu() {
 				std::cout << std::endl;
 				break;
 			}
-			std::cout << p;
+			//std::cout << p;
 			break;
 		case 4:
 			safetyFlag = true;
@@ -613,9 +613,7 @@ void Menu() {
 	}
 }
 
-
 int main()
 {
 	Menu();
-	
 }

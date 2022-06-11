@@ -5,14 +5,12 @@
 #include <string>
 #include <iterator>
 
-// конструктор по умолчанию
 Model::Model() :
 	xSize{ 0 },
 	ySize{ 0 },
 	ppls{ 0 },
 	docs{ 0 }
 {};
-//конструктор с параметрами
 Model::Model(float sizeX = 0, float sizeY = 0, int countPpls = 0, int countDocs = 0) {
 	if (countPpls < 0) throw std::logic_error("Negative number of people!");
 	if (countDocs < 0) throw std::logic_error("Negative number of doctors!");
@@ -43,7 +41,6 @@ int Model::getHowManySick() const {
 	return countSick;
 }
 
-// возврат  человека; доктора по индексу
 SimplePeople Model::getPplByInd(int ind) const {
 	if (ind > ppls.size() - 1) throw std::logic_error("There are fewer people than the index.");
 	if (ind < 0) throw std::logic_error("The index cannot be negative.");
@@ -54,16 +51,27 @@ Doctor Model::getDocByInd(int ind) const {
 	if (ind < 0) throw std::logic_error("The index cannot be negative.");
 	return *docs[ind];
 }
+/*
+SimplePeople p;
+m.push(p);
 
-// добавление человека; доктора
-void Model::push(std::shared_ptr<SimplePeople> p) {
-	ppls.resize(ppls.size() + 1);
-	ppls[ppls.size() - 1] = p;
+*/
+void Model::push(std::shared_ptr<People> p){
+
+	if (typeid(*p) == typeid(SimplePeople))
+		ppls.push_back(std::dynamic_pointer_cast <SimplePeople>(p));
+	if (typeid(*p) == typeid(Doctor))
+		docs.push_back(std::dynamic_pointer_cast<Doctor>(p));
 }
-void Model::push(std::shared_ptr<Doctor> d) {
-	docs.resize(docs.size() + 1);
-	docs[docs.size() - 1] = d;
-}
+
+//void Model::push(std::shared_ptr<SimplePeople> p) {
+//	ppls.resize(ppls.size() + 1);
+//	ppls[ppls.size() - 1] = p;
+//}
+//void Model::push(std::shared_ptr<Doctor> d) {
+//	docs.resize(docs.size() + 1);
+//	docs[docs.size() - 1] = d;
+//}
 
 
 void Model::delPplByInd(int ind) {
@@ -105,7 +113,6 @@ float Model::distance(std::shared_ptr<SimplePeople > ppl1, std::shared_ptr<Simpl
 
 
 
-// обновление состояний агентов с временем dt
 void Model::updateAgentStatus(int dt) {
 	for (int k = 0; k < dt; k++) {
 
@@ -201,7 +208,7 @@ std::ostream& operator <<(std::ostream& out, Model& m) {
 		out << "No peoples" << std::endl;
 	else {
 		for (int i = 0; i < m.ppls.size(); i++) {
-			if (m.ppls[i] == nullptr) break;
+			if (m.ppls[i] == nullptr) continue;
 			out << "People #" << i + 1 << std::endl;
 			out << m.ppls[i];
 		}

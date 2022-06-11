@@ -7,11 +7,6 @@ SimplePeople::SimplePeople() : People(),
     incubationPeriod{ 0 },
     infective{ false }
 {}
-SimplePeople::SimplePeople(const SimplePeople& other): People(other.xCoord, other.yCoord, other.xSpeed, other.ySpeed),
-    sickStatus{ other.sickStatus },
-    incubationPeriod{ other.incubationPeriod },
-    infective{ other.infective }
-{}
 
 SimplePeople::SimplePeople(float x, float y, float xspeed, float yspeed) :
     People(x,y,xspeed,yspeed),
@@ -29,6 +24,15 @@ SimplePeople::SimplePeople(float x, float y, float xspeed, float yspeed, bool si
 void SimplePeople::sickStatusUpdate(bool sick, int per) {
     sickStatus = sick;
     incubationPeriod = per;
+}
+
+//std::ostream& SimplePeople::operator<<(std::ostream& out)
+//{
+//    out << "123Test";
+//    return out;
+//}
+void SimplePeople::Nothing() {
+    std::cout << "\n\nNoThInG\n";
 }
 
 

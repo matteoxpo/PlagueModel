@@ -52,8 +52,9 @@ public:
 	SimplePeople getPplByInd(int) const;
 	Doctor getDocByInd(int) const;
 
-	void push(std::shared_ptr<SimplePeople>);
-	void push(std::shared_ptr<Doctor>);
+
+	void push(std::shared_ptr<People>);
+
 
 	void delPplByInd(int);
 	void delDocByInd(int);

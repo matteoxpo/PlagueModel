@@ -10,6 +10,8 @@ public:
 
     void treat(SimplePeople &);
 
+    void Nothing();
+    //std::ostream& operator<<(std::ostream&, const Doctor&);
     friend std::ostream& operator <<(std::ostream&, Doctor&);
     friend std::ostream& operator <<(std::ostream&, std::shared_ptr<Doctor>);
 };
